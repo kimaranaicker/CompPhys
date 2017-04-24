@@ -1,6 +1,9 @@
 Problem 3
 
+import math
+import numpy as np
+
 print 'Enter value for n: '
-y = np.linspace(0., math.pi/2., input())
-print y
+x = np.linspace(0., math.pi/2., input())
+print x
 
