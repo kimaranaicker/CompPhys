@@ -1,0 +1,6 @@
+Problem 3
+
+print 'Enter value for n: '
+y = np.linspace(0., math.pi/2., input())
+print y
+
