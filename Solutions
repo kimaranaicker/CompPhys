@@ -1,1 +1,40 @@
+#Problem 1
+
+from numpy import arange,exp,real
+from numpy.fft import fft,ifft
+from matplotlib import pyplot as plt
+def conv(f,g):
+    ft1=fft(f)
+    ft2=fft(g)
+    return real(ifft(ft1*ft2))
+    
+x=arange(-40,40,0.1)
+
+dx=10 #amount to shift to the right, must be less than biggest value of x in range
+
+f=exp(-0.5*(x)**2/0.5**2)#array
+g=exp(-0.5*(x-dx+40)**2/0.5**2)
+
+def shift(f,dx):
+    g=exp(-0.5*(x-dx+40)**2/0.5**2)
+    
+    g=g/g.sum()
+    f=f/f.sum()
+
+    f /= max(f)
+    g /= max(g)
+
+    h=conv(f,g)
+
+    h /= max(h)
+    return h
+
+i=shift(f,dx)
+plt.plot(x,f,'b')
+plt.plot(x,i,'r')
+plt.show()
+
+#Problem 2
+
+
 
