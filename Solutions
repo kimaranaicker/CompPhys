@@ -36,5 +36,21 @@ plt.show()
 
 #Problem 2
 
+from numpy import arange,exp,conj
+from numpy.fft import fft,ifft
+from matplotlib import pyplot as plt
 
+
+x=arange(-10,10,0.1)
+
+a=exp(-0.5*(x)**2/0.5**2)#array
+
+def corr(f,g):
+    y=ifft(fft(f)*conj(fft(g)))
+    return y
+
+i=corr(a,a) 
+   
+plt.plot(x,i,'r')
+plt.show()
 
