@@ -54,3 +54,51 @@ i=corr(a,a)
 plt.plot(x,i,'r')
 plt.show()
 
+#Problem 3 
+
+from numpy import arange,exp,conj,real
+from numpy.fft import fft,ifft
+from matplotlib import pyplot as plt
+
+x=arange(-40,40,0.1)
+
+dx=50 
+
+f=exp(-0.5*(x)**2/0.5**2)#array
+g=exp(-0.5*(x-dx+40)**2/0.5**2)
+
+
+def conv(f,g):
+    ft1=fft(f)
+    ft2=fft(g)
+    return real(ifft(ft1*ft2))
+    
+def shift(f,dx):
+    g=exp(-0.5*(x-dx+40)**2/0.5**2)
+    
+    g=g/g.sum()
+    f=f/f.sum()
+
+    f /= max(f)
+    g /= max(g)
+
+    h=conv(f,g)
+
+    h /= max(h)
+    return h
+
+i=shift(f,dx)
+
+def corr(f,g):
+    y=ifft(fft(f)*conj(fft(g)))
+    return y
+
+i=corr(i,i) 
+   
+plt.plot(x,i,'r')
+plt.show()
+
+#The correlation function is independent of the shift.
+
+#Problem 4
+
