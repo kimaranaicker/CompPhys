@@ -100,5 +100,23 @@ plt.show()
 
 #The correlation function is independent of the shift.
 
-#Problem 4
+#Problem 5
+
+class Complex:
+    def __init__(self, r=0.0, i=0.0):
+        self.r = r
+        self.i = i
+
+    def __sub__(self, other):
+        return Complex(self.r - other.r,
+                       self.i - other.r)
+
+    def __mul__(self, other):
+        return Complex(self.r*other.r - self.i*other.i,
+                       self.i*other.r + self.r*other.i)
+
+    def __div__(self, other):
+        r = float(other.r**2 + other.i**2)
+        return Complex((self.r*other.r+self.i*other.i)/r, (self.i*other.r-self.r*other.i)/r)
+
 
