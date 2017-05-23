@@ -1,0 +1,98 @@
+#Kimara Naicker 214505202 kimaranaicker@gmail.com
+#Tutorial 3
+
+import numpy as np
+from matplotlib import pyplot as plt
+
+#Problem 1
+
+class NBody:
+      def __init__(self,x=0,y=0,m=1,n=100, G=1, soft=0.1):
+          self.dict={}
+          self.dict['n']=n
+          self.dict['G']=G
+          self.dict['soft']=soft
+          self.x=x
+          self.y=y
+          self.m=m
+          
+      def pe(self):
+          pe=0
+          for n in range(0, self.dict['n']):
+              x=self.x[n]-self.x
+              y=self.y[n]-self.y
+              rsquared=x**2+y**2
+              soft=self.dict['soft']**2
+              rsquared[rsquared<soft]=soft
+              rsquared=rsquared+self.dict['soft']**2
+              r=np.sqrt(rsquared)
+              pe += self.dict['G']*np.sum(self.m*self.m[n]/r)
+          return -0.5*pe
+          
+#Problem 2
+         
+def init (self):
+        self.x=np.random.randn(self.dict['n'])
+        self.y=np.random.randn(self.dict['n'])
+        self.vx=np.zeros(self.dict['n'])
+        self.vy=np.zeros(self.dict['n'])
+        self.fx=np.zeros(self.dict['n'])
+        self.fy=np.zeros(self.dict['n'])
+
+def force(self):
+          for n in range(0,self.dict['n']):
+              x=self.x[n]-self.x
+              y=self.y[n]-self.y
+              rsquared=x**2+y**2
+              soft=self.dict['soft']**2
+              rsquared[rsquared<soft]=soft
+              rsquared=rsquared+self.dict['soft']**2
+              r=np.sqrt(rsquared)
+              rcubed=(r*rsquared)
+              self.fx[n]=-self.dict['G']*np.sum((self.m*x)/rcubed)*self.m[n]
+              self.fy[n]=-self.dict['G']*np.sum((self.m*y)/rcubed)*self.m[n] 
+    
+def new(self,step=0.1):
+          self.x+=self.vx*step
+          self.y+=self.vy*step
+          pe=self.pe()
+          self.force()
+          self.vx+=self.fx*step
+          self.vy+=self.fy*step
+          ke=0.5*np.sum(self.m*(self.vx**2+self.vy**2))
+          return pe + ke
+          
+#Problem 3
+import numpy as np
+from matplotlib import pyplot as plt
+          
+N=100
+x=np.linspace(0,2*np.pi,N)
+npoly=5
+y1=np.sin(x)
+y2=np.cos(x)
+
+def llsf(x,npoly,points):
+    a=np.zeros([x.size,npoly])
+    a[:,0]=1
+    for n in range(1,npoly):
+        a[:,n]=a[:,n-1]*x
+    a=np.matrix(a)
+    d=np.matrix(points).transpose()
+    lhs=a.transpose()*a
+    rhs=a.transpose()*d
+    fitp=np.linalg.inv(lhs)*rhs
+    k=a*fitp
+    return k
+    
+    
+y1pts=y1+np.random.randn(N)
+y2pts=y2+np.random.randn(N)
+
+y1=llsf(x,npoly,y1pts)
+y2=llsf(x,npoly,y2pts)
+
+plt.plot(x,y1)
+plt.plot(x,y2)
+plt.show()
+
